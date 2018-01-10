@@ -1,0 +1,79 @@
+CREATE DATABASE 测试数据库;
+
+USE 测试数据库;
+
+CREATE TABLE user (
+id INT,
+username VARCHAR,
+password VARCHAR,
+sex ENUM,
+email VARCHAR,
+field VARCHAR
+);
+
+DESC user;
+
+INSERT INTO user VALUES (3,'我是黄复贵','123456','女','1151650717@qq.','后端开发');
+INSERT INTO user VALUES (100,'我是黄复贵','123456','男','1151650717@qq.com','操作系统');
+INSERT INTO user VALUES (1,'我是黄复贵','123456','男','1151650717@qq.com','后端开发');
+INSERT INTO user VALUES (2,'我是王琪','123456','男','1151650717@qq.com','前端UI设计');
+INSERT INTO user VALUES (1,'我是黄复贵','123','男','1151650717@qq.com','高并发优化');
+INSERT INTO user VALUES (100,'我是黄复贵','123456','男','1151650717@qq.','redis缓存的并发优化');
+INSERT INTO user VALUES (-8,'我是黄复贵','123','女','1151650717@qq.com','Javaweb');
+INSERT INTO user VALUES (2,'黄复贵哈哈哈','123456','男','1151650717@qq.com','后端开发');
+INSERT INTO user VALUES (1,'我是黄复贵','123456','男','1151650717@qq.com','后端开发');
+INSERT INTO user VALUES (5,'我是石头哥','123456','男','1151650717@qq.com','Seckill系统优化');
+INSERT INTO user VALUES (3,'我是黄复贵','123','男','1151650717@qq.','常见的高并发解决方案');
+
+
+SELECT * FROM user;
+
+SELECT * FROM user WHERE id NOT IN (5);
+
+SELECT * FROM user WHERE id NOT IN (5,-8);
+
+SELECT * FROM user WHERE id NOT IN (5,-8,1);
+
+SELECT * FROM user WHERE username = '我是黄复贵' AND id NOT IN (5,-8,1);
+
+SELECT * FROM user WHERE username = '我是黄复贵' AND password = '123456' AND id NOT IN (5,-8,1);
+
+SELECT * FROM user WHERE sex = '男' AND username = '我是黄复贵' AND password = '123456' AND id NOT IN (5,-8,1);
+
+SELECT * FROM user WHERE sex = '男' AND email = '1151650717@qq.com' AND username = '我是黄复贵' AND password = '123456' AND id NOT IN (5,-8,1);
+
+SELECT id,username,email,field FROM user WHERE sex = '男' AND email = '1151650717@qq.com' AND username = '我是黄复贵' AND password = '123456' AND id NOT IN (5,-8,1);
+
+SELECT * FROM user WHERE id NOT IN (3,100,1,2,-8);
+
+SELECT * FROM user WHERE id = 3 OR sex = '女' OR id NOT IN (3,100,1,2,-8);
+
+SELECT * FROM user WHERE id = 3 OR sex = '女' OR email = '1151650717@qq.com' OR field = '操作系统' OR id NOT IN (3,100,1,2,-8);
+
+SELECT id FROM user WHERE id = 3 OR sex = '女' OR email = '1151650717@qq.com' OR field = '操作系统' OR id NOT IN (3,100,1,2,-8) GROUP BY id;
+
+SELECT id FROM user WHERE id = 3 OR sex = '女' OR email = '1151650717@qq.com' OR field = '操作系统' OR id NOT IN (3,100,1,2,-8) GROUP BY id ORDER BY id;
+
+SELECT id FROM user WHERE id = 3 OR sex = '女' OR email = '1151650717@qq.com' OR field = '操作系统' OR id NOT IN (3,100,1,2,-8) GROUP BY id ORDER BY id DESC;
+
+SELECT username FROM user WHERE id = 3 OR sex = '女' OR email = '1151650717@qq.com' OR field = '操作系统' OR id NOT IN (3,100,1,2,-8) GROUP BY username ORDER BY username;
+
+SELECT username FROM user WHERE id = 3 OR sex = '女' OR email = '1151650717@qq.com' OR field = '操作系统' OR id NOT IN (3,100,1,2,-8) GROUP BY username ORDER BY username DESC;
+
+
+SELECT field FROM user;
+
+SELECT field FROM user LIKE '高并发优化';
+
+SELECT field FROM user WHERE field LIKE '高并发优化';
+
+SELECT field,id FROM user WHERE field LIKE '高并发优化';
+
+
+CREATE INDEX ON user (id);
+
+SELECT * FROM user WHERE id = -8 USING INDEX;
+
+CREATE INDEX ON user (username);
+
+SELECT * FROM user WHERE username = '我是黄复贵' USING INDEX;
